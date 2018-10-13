@@ -17,7 +17,7 @@ class Converter extends Component {
             to: this.api.convert(1, 'USD', 'UAH'),
             to_code: 'UAH',
 
-            _swapHovered: false
+            _swap_hovered: false
         };
 
         this.selectOptions = currenciesCodesList.map((el) => {
@@ -76,34 +76,44 @@ class Converter extends Component {
         });
     }
 
+    handleFromChange = (e) => this.calculate('from', e);
 
+    handleFromCurrencyChange = (val) => this.handleCurrencyChange('from', val);
+
+    handleToChange = (e) => this.calculate('to', e);
+
+    handleToCurrencyChange = (val) => this.handleCurrencyChange('to', val);
+
+    onMouseEntersSwap = () => this.setState({_swap_hovered: true});
+
+    onMouseLeavesSwap = () => this.setState({_swap_hovered: false});
 
     render() {
         return (
             <div className={styles.Converter}>
                 <div className={styles.row}>
                     <div className={styles.pair}>
-                        <input value={this.state.from} type="number" min="0" step="1" onChange={(e) => this.calculate('from', e)}/>
+                        <input value={this.state.from} type="number" min="0" step="1" onChange={this.handleFromChange}/>
                         <Select
                             className={styles.select}
                             options={this.selectOptions}
                             value={this.selectOptions.filter((e) => e.value === this.state.from_code)[0]}
-                            onChange={(val) => this.handleCurrencyChange('from', val)}
+                            onChange={this.handleFromCurrencyChange}
                         />
                     </div>
                     <FaExchangeAlt
-                        className={this.state._swapHovered ? `${styles.swap} ${styles.animated}` : styles.swap}
+                        className={this.state._swap_hovered ? `${styles.swap} ${styles.animated}` : styles.swap}
                         onClick={this.swapValues.bind(this)}
-                        onMouseEnter={() => this.setState({_swapHovered: true})}
-                        onMouseLeave={() => this.setState({_swapHovered: false})}
+                        onMouseEnter={this.onMouseEntersSwap}
+                        onMouseLeave={this.onMouseLeavesSwap}
                     />
                     <div className={styles.pair}>
-                        <input value={this.state.to} type="number" min="0" step="1" onChange={(e) => this.calculate('to', e)}/>
+                        <input value={this.state.to} type="number" min="0" step="1" onChange={this.handleToChange}/>
                         <Select
                             className={styles.select}
                             options={this.selectOptions}
                             value={this.selectOptions.filter((e) => e.value === this.state.to_code)[0]}
-                            onChange={(val) => this.handleCurrencyChange('to', val)}
+                            onChange={this.handleToCurrencyChange}
                         />
                     </div>
                 </div>
@@ -121,10 +131,5 @@ const mapStateToProps = store => {
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        dispatch: dispatch
-    }
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Converter)
+export default connect(mapStateToProps)(Converter)

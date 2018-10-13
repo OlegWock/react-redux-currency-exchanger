@@ -2,21 +2,25 @@ import React, { Component } from 'react';
 import styles from './App.module.scss';
 import { connect } from 'react-redux';
 import API from '../utils/api';
-import {currenciesCodesList} from '../utils/currencies';
-import {fetchRates} from "../actions/rates";
+import { currenciesCodesList } from '../utils/currencies';
+import { fetchRates } from "../actions/rates";
 import Converter from './Converter';
 import Button from "./Button";
 import Calculator from "./Calculator";
 import { FaHeart } from 'react-icons/fa';
 
+
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentMode: 'converter'
+            current_mode: 'converter'
         };
         this.api = new API();
     }
+
+    switchToCalculator = () => this.setState({current_mode: 'calculator'});
+    switchToConverter = () => this.setState({current_mode: 'converter'});
 
     componentDidMount() {
         this.checkerTimerId = setInterval(this.checkRates.bind(this), 1000 * 60 * 2);
@@ -29,7 +33,7 @@ class App extends Component {
 
     checkRates() {
         if ((Date.now() - this.props.ratesUpdatedAt) > 1000 * 60 * 60 * 18) {
-            this.props.dispatch(fetchRates(this.api, currenciesCodesList));
+            this.props.fetchRates(this.api, currenciesCodesList);
         }
     }
 
@@ -40,12 +44,12 @@ class App extends Component {
 
         if (this.state.currentMode === 'converter') {
             mainComponent = <Converter />;
-            switchButton = <Button onClick={() => this.setState({currentMode: 'calculator'})}>
+            switchButton = <Button onClick={this.switchToCalculator}>
                 Switch to calculator
             </Button>;
         } else {
             mainComponent = <Calculator />;
-            switchButton = <Button onClick={() => this.setState({currentMode: 'converter'})}>
+            switchButton = <Button onClick={this.switchToConverter}>
                 Switch to converter
             </Button>;
         }
@@ -55,7 +59,7 @@ class App extends Component {
             <div className={styles.App}>
                 <main>
                     <div className={styles.heading}>
-                        <span>{this.state.currentMode}</span>
+                        <span>{this.state.current_mode}</span>
                         {switchButton}
                     </div>
 
@@ -78,10 +82,4 @@ const mapStateToProps = store => {
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        dispatch: dispatch
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, { fetchRates })(App);

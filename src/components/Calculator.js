@@ -34,15 +34,17 @@ class Calculator extends Component {
     }
 
     addToExpression(action) {
-        let node = this.inputRef.current;
-        let cursor = node.selectionStart;
-        let exp = this.state.expression;
-        this.setState({
-            expression: [exp.slice(0, cursor), action, exp.slice(cursor)].join('')
-        }, () => {
-            this.inputRef.current.focus();
-            node.selectionStart = node.selectionEnd = cursor+1;
-        });
+        return (e) => {
+            let node = this.inputRef.current;
+            let cursor = node.selectionStart;
+            let exp = this.state.expression;
+            this.setState({
+                expression: [exp.slice(0, cursor), action, exp.slice(cursor)].join('')
+            }, () => {
+                this.inputRef.current.focus();
+                node.selectionStart = node.selectionEnd = cursor + 1;
+            });
+        }
 
     }
 
@@ -96,6 +98,8 @@ class Calculator extends Component {
         this.setState(arg, this.calculate)
     }
 
+    clearResult = () => this.setState({expression: '', result: 0});
+
     render() {
         return <div className={styles.Calculator}>
             <div className={styles.examples}>
@@ -121,33 +125,33 @@ class Calculator extends Component {
             <div className={styles.buttons}>
                 <div className={styles.row}>
                     <CalcButton />
-                    <CalcButton onClick={() => this.addToExpression('(')}>(</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression(')')}>)</CalcButton>
-                    <CalcButton onClick={() => this.setState({expression: '', result: 0})}>AC</CalcButton>
+                    <CalcButton onClick={this.addToExpression('(')}>(</CalcButton>
+                    <CalcButton onClick={this.addToExpression(')')}>)</CalcButton>
+                    <CalcButton onClick={this.clearResult}>AC</CalcButton>
                 </div>
                 <div className={styles.row}>
-                    <CalcButton onClick={() => this.addToExpression('7')}>7</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('8')}>8</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('9')}>9</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('/')}>÷</CalcButton>
+                    <CalcButton onClick={this.addToExpression('7')}>7</CalcButton>
+                    <CalcButton onClick={this.addToExpression('8')}>8</CalcButton>
+                    <CalcButton onClick={this.addToExpression('9')}>9</CalcButton>
+                    <CalcButton onClick={this.addToExpression('/')}>÷</CalcButton>
                 </div>
                 <div className={styles.row}>
-                    <CalcButton onClick={() => this.addToExpression('4')}>4</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('5')}>5</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('6')}>6</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('*')}>×</CalcButton>
+                    <CalcButton onClick={this.addToExpression('4')}>4</CalcButton>
+                    <CalcButton onClick={this.addToExpression('5')}>5</CalcButton>
+                    <CalcButton onClick={this.addToExpression('6')}>6</CalcButton>
+                    <CalcButton onClick={this.addToExpression('*')}>×</CalcButton>
                 </div>
                 <div className={styles.row}>
-                    <CalcButton onClick={() => this.addToExpression('1')}>1</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('2')}>2</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('3')}>3</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('-')}>-</CalcButton>
+                    <CalcButton onClick={this.addToExpression('1')}>1</CalcButton>
+                    <CalcButton onClick={this.addToExpression('2')}>2</CalcButton>
+                    <CalcButton onClick={this.addToExpression('3')}>3</CalcButton>
+                    <CalcButton onClick={this.addToExpression('-')}>-</CalcButton>
                 </div>
                 <div className={styles.row}>
-                    <CalcButton onClick={() => this.addToExpression('0')}>0</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('.')}>.</CalcButton>
+                    <CalcButton onClick={this.addToExpression('0')}>0</CalcButton>
+                    <CalcButton onClick={this.addToExpression('.')}>.</CalcButton>
                     <CalcButton onClick={this.calculate.bind(this)}>=</CalcButton>
-                    <CalcButton onClick={() => this.addToExpression('+')}>+</CalcButton></div>
+                    <CalcButton onClick={this.addToExpression('+')}>+</CalcButton></div>
             </div>
         </div>;
     }
@@ -161,10 +165,5 @@ const mapStateToProps = store => {
     }
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-        dispatch: dispatch
-    }
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Calculator);
+export default connect(mapStateToProps)(Calculator);
