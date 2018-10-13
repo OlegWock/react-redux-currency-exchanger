@@ -16,8 +16,6 @@ class Calculator extends Component {
         this.state = {
             expression: "",
             error: false,
-
-            current_currency: "",
             result_currency: "USD",
             result: 0
         };
