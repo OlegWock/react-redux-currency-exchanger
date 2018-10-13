@@ -41,3 +41,31 @@
         }
     }
 }
+
+@media (max-width: 500px) {
+    .App {
+        main {
+
+            .heading {
+                flex-direction: column;
+                & > * {
+                    flex-grow: 1;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .App {
+        padding: 16px;
+        box-sizing: border-box;
+        main {
+            width: 100%;
+            //margin: 8px;
+            box-sizing: border-box;
+            padding: 8px;
+
+        }
+    }
+}

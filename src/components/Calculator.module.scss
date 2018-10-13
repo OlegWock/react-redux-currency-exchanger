@@ -85,6 +85,38 @@
 
 }
 
+@media (max-width: 800px) {
+    .Calculator {
+        width: 100%;
+
+        .result {
+            width: auto;
+        }
+
+        .inputs {
+            .exppression {
+                width: 400px;
+            }
+        }
+    }
+}
+
+@media (max-width: 460px) {
+    .Calculator {
+        width: 100%;
+
+        .result {
+            width: auto;
+        }
+
+        .inputs {
+            .exppression {
+                width: 300px;
+            }
+        }
+    }
+}
+
 @keyframes shake {
     0% {
         transform: translateX(0px);

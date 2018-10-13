@@ -69,3 +69,23 @@
     }
 
 }
+
+@media (max-width: 1000px) {
+    .Converter {
+        .row {
+            flex-direction: column;
+            justify-content: center;
+
+            .pair {
+                input[type="number"] {
+                    width: 100%;
+                    margin: 8px;
+                }
+            }
+
+            .select {
+                right: 14px;
+            }
+        }
+    }
+}

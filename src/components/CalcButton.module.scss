@@ -2,7 +2,6 @@
 
 .CalcButton {
     background: $accent_color;
-    //padding: 10px;
     width: 150px;
     height: 80px;
     font-size: 24px;
@@ -17,4 +16,12 @@
     &:hover {
         background: darken($accent_color, 3%);
     }
+}
+
+@media (max-width: 800px) {
+    .CalcButton {
+        width: 70px;
+        height: 35px;
+    }
+
 }
