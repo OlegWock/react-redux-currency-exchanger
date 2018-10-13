@@ -2,6 +2,7 @@
   "name": "ex",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://olegwock.github.io/currency_exchanger",
   "dependencies": {
     "axios": "^0.18.0",
     "lodash": "^4.17.11",
