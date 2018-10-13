@@ -1,8 +1,35 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
+import throttle from 'lodash/throttle';
 import rootReducer from './reducers';
 
-const initialState = {};
+const loadState = () => {
+    try {
+        const serializedState = localStorage.getItem('RX_CALCULATOR');
+        if (serializedState === null) {
+            return initialState;
+        }
+        return JSON.parse(serializedState);
+    } catch (err) {
+        return initialState;
+    }
+};
+
+const saveState = (state) => {
+    try {
+        const serializedState = JSON.stringify(state);
+        localStorage.setItem('RX_CALCULATOR', serializedState);
+    } catch {
+
+    }
+};
+
+const initialState = {
+    rates: {
+        data: {},
+        updated_at: 0,
+    }
+};
 const enhancers = [];
 const middleware = [
     thunk,
@@ -23,8 +50,12 @@ const composedEnhancers = compose(
 
 const store = createStore(
     rootReducer,
-    initialState,
+    loadState(),
     composedEnhancers
 );
+
+store.subscribe(throttle(() => {
+    saveState(store.getState());
+}));
 
 export default store;

@@ -4,12 +4,17 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "node-sass": "^4.9.3",
+    "numeral": "^2.0.6",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-icons": "^3.2.0",
     "react-redux": "^5.0.7",
     "react-scripts": "2.0.4",
-    "redux": "^4.0.0",
+    "react-select": "^2.1.0",
+    "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {

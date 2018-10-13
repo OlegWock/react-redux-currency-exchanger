@@ -1,0 +1,15 @@
+@import "base";
+
+.Button {
+    background: $accent_color;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    transition: 0.15s linear;
+    &:hover {
+        background: darken($accent_color, 3%);
+    }
+}
