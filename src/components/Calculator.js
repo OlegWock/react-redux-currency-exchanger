@@ -31,6 +31,7 @@ class Calculator extends Component {
         this.inputRef = React.createRef();
 
         this.addToExpression = this.addToExpression.bind(this);
+        this.loadExample = this.loadExample.bind(this);
 
     }
 
@@ -54,7 +55,12 @@ class Calculator extends Component {
     }
 
     handleResultCurrencyChange({ value }) {
-        this.setState({result_currency: value}, this.calculate);
+        this.setState({result_currency: value}, () => {
+            let valid = this.calculate();
+            if (!valid) {
+                this.setState({result: 0});
+            }
+        });
     }
 
     calculate() {
@@ -62,7 +68,7 @@ class Calculator extends Component {
         if (!valid) {
             this.setState({error: true});
             setTimeout(() => this.setState({error: false}), 500);
-            return valid;
+            return false;
         }
 
         let resultExp = '';
@@ -85,13 +91,18 @@ class Calculator extends Component {
 
         this.setState({ result });
 
-        return valid;
+        return true;
+    }
 
-
+    loadExample(arg) {
+        this.setState(arg, this.calculate)
     }
 
     render() {
         return <div className={styles.Calculator}>
+            <div className={styles.examples}>
+                <span onClick={() => this.loadExample({expression: '(45$ * 25 * 0.8) - 2EUR', result_currency: "JPY"})} className={styles.example}>Load example</span>
+            </div>
             <div className={`${styles.inputs} ${this.state.error ? styles.error : ''}`}>
                 <input type="text" className={styles.exppression}
                        value={this.state.expression}
@@ -106,7 +117,7 @@ class Calculator extends Component {
             </div>
 
             <div className={styles.result}>
-                = {numeral(this.state.result).format('0,0.0')} {this.state.result_currency}
+                = {numeral(this.state.result).format('0,0.0000')} {this.state.result_currency}
             </div>
 
             <div className={styles.buttons}>

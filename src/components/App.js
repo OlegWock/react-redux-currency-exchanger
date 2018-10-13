@@ -13,7 +13,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentMode: 'calculator'
+            currentMode: 'converter'
         };
         this.api = new API();
     }
