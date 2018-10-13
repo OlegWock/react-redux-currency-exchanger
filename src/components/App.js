@@ -28,14 +28,9 @@ class App extends Component {
     }
 
     checkRates() {
-        console.log('Checking rates', this.props.ratesUpdatedAt);
         if ((Date.now() - this.props.ratesUpdatedAt) > 1000 * 60 * 60 * 18) {
             this.props.dispatch(fetchRates(this.api, currenciesCodesList));
         }
-    }
-
-    switchTo(screen) {
-        this.setState({currentMode: screen});
     }
 
 
@@ -49,7 +44,7 @@ class App extends Component {
                 Switch to calculator
             </Button>;
         } else {
-            mainComponent = <Calculator></Calculator>;
+            mainComponent = <Calculator />;
             switchButton = <Button onClick={() => this.setState({currentMode: 'converter'})}>
                 Switch to converter
             </Button>;
