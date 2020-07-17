@@ -5,7 +5,7 @@
   "homepage": "http://olegwock.github.io/currency_exchanger",
   "dependencies": {
     "axios": "^0.18.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "moment": "^2.22.2",
     "node-sass": "^4.9.3",
     "numeral": "^2.0.6",
